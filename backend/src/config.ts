@@ -1,8 +1,19 @@
 import 'dotenv/config'
 import { z } from 'zod'
 
+/**
+ * Boolean parser correto para variáveis de ambiente.
+ * z.coerce.boolean() usa Boolean() nativo que trata "false" como true (string não-vazia).
+ * Este helper aceita apenas "true"/"1"/"yes"/"on" como verdadeiro; resto é false.
+ */
+const boolFromEnv = z
+  .string()
+  .optional()
+  .default('false')
+  .transform((v) => ['true', '1', 'yes', 'on'].includes((v ?? '').toLowerCase()))
+
 const schema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(3001),
   HOST: z.string().default('0.0.0.0'),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
@@ -16,7 +27,7 @@ const schema = z.object({
 
   MINIO_ENDPOINT: z.string().default('minio'),
   MINIO_PORT: z.coerce.number().default(9000),
-  MINIO_USE_SSL: z.coerce.boolean().default(false),
+  MINIO_USE_SSL: boolFromEnv,
   MINIO_ACCESS_KEY: z.string().min(1),
   MINIO_SECRET_KEY: z.string().min(1),
   MINIO_BUCKET: z.string().default('anexos-denuncias'),

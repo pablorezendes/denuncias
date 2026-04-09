@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync } from 'fastify'
 import { z } from 'zod'
-import { and, desc, eq, gte, lte, sql } from 'drizzle-orm'
+import { and, desc, eq, gte, lte, sql, inArray } from 'drizzle-orm'
 import { db } from '../db/client.js'
 import {
   denuncias,
@@ -168,7 +168,7 @@ export const denunciasRoutes: FastifyPluginAsync = async (app) => {
             })
             .from(denunciaCategoria)
             .innerJoin(categorias, eq(categorias.id, denunciaCategoria.categoriaId))
-            .where(sql`${denunciaCategoria.denunciaId} = ANY(${ids})`)
+            .where(inArray(denunciaCategoria.denunciaId, ids))
         : []
 
       const catsByDenuncia = cats.reduce<Record<number, string[]>>((acc, c) => {

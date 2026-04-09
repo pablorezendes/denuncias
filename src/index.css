@@ -1,8 +1,9 @@
+/* Imports de CSS externo DEVEM vir antes de qualquer outra regra */
+@import url('./assets/hsfa-theme.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('./assets/hsfa-theme.css');
 
 :root {
   font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
