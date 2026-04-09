@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { and, desc, eq, sql } from 'drizzle-orm'
 import { db } from '../db/client.js'
 import { notificacoes } from '../db/schema/index.js'
+import { camelToSnake } from '../lib/case.js'
 
 const listQuery = z.object({
   userId: z.coerce.number().int().positive(),
@@ -20,11 +21,12 @@ export const notificationsRoutes: FastifyPluginAsync = async (app) => {
     const filters = [eq(notificacoes.userId, q.userId)]
     if (q.apenasNaoLidas) filters.push(eq(notificacoes.lida, false))
 
-    return db
+    const data = await db
       .select()
       .from(notificacoes)
       .where(and(...filters))
       .orderBy(desc(notificacoes.dataCriacao))
+    return camelToSnake(data)
   })
 
   // GET /api/notifications/count-nao-lidas

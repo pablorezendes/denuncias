@@ -95,8 +95,9 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
         token,
         user: {
           ...payload,
-          forcePasswordChange: user.forcePasswordChange ?? false,
-          ultimoAcesso: user.ultimoAcesso,
+          // Snake_case para compatibilidade com o frontend legado
+          force_password_change: user.forcePasswordChange ?? false,
+          ultimo_acesso: user.ultimoAcesso,
         },
       })
     },

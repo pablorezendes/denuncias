@@ -2,6 +2,7 @@ import type { FastifyPluginAsync } from 'fastify'
 import { asc, eq } from 'drizzle-orm'
 import { db } from '../db/client.js'
 import { categorias } from '../db/schema/index.js'
+import { camelToSnake } from '../lib/case.js'
 
 export const categoriasRoutes: FastifyPluginAsync = async (app) => {
   // Público: listar ativas (usado no formulário de nova denúncia)
@@ -11,6 +12,6 @@ export const categoriasRoutes: FastifyPluginAsync = async (app) => {
       .from(categorias)
       .where(eq(categorias.ativo, true))
       .orderBy(asc(categorias.ordem), asc(categorias.nome))
-    return data
+    return camelToSnake(data)
   })
 }

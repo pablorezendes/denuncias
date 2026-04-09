@@ -4,6 +4,7 @@ import { eq, desc } from 'drizzle-orm'
 import { db } from '../db/client.js'
 import { users, userRole, roles } from '../db/schema/index.js'
 import { hashPassword } from '../services/hash.js'
+import { camelToSnake } from '../lib/case.js'
 
 const createSchema = z.object({
   nome: z.string().min(2),
@@ -58,7 +59,7 @@ export const usersRoutes: FastifyPluginAsync = async (app) => {
       {},
     )
 
-    return all.map((u) => ({ ...u, roles: rolesByUser[u.id] || [] }))
+    return camelToSnake(all.map((u) => ({ ...u, roles: rolesByUser[u.id] || [] })))
   })
 
   // GET /api/users/:id - detalhes
@@ -79,7 +80,7 @@ export const usersRoutes: FastifyPluginAsync = async (app) => {
         .where(eq(userRole.userId, id))
 
       const { senhaHash: _senhaHash, ...safeUser } = user
-      return { ...safeUser, roles: userRoles }
+      return camelToSnake({ ...safeUser, roles: userRoles })
     },
   )
 

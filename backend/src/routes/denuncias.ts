@@ -13,6 +13,7 @@ import {
 import { gerarProtocolo } from '../services/protocolo.js'
 import { getSignedUrl, removeObject } from '../services/storage.js'
 import { config } from '../config.js'
+import { camelToSnake } from '../lib/case.js'
 
 const createSchema = z.object({
   descricao: z.string().min(10, 'Descrição deve ter pelo menos 10 caracteres'),
@@ -115,14 +116,15 @@ export const denunciasRoutes: FastifyPluginAsync = async (app) => {
       .where(eq(historicoStatus.denunciaId, denuncia.id))
       .orderBy(historicoStatus.dataAlteracao)
 
+    // Esconde IP/UA na consulta pública
+    const { ipDenunciante: _ip, userAgent: _ua, ...denunciaPublica } = denuncia
+
     return {
-      denuncia: {
-        ...denuncia,
-        ipDenunciante: undefined, // esconde IP na consulta pública
-        userAgent: undefined,
+      denuncia: camelToSnake({
+        ...denunciaPublica,
         categorias: cats.map((c) => c.nome),
-      },
-      historico,
+      }),
+      historico: camelToSnake(historico),
     }
   })
 
@@ -178,11 +180,13 @@ export const denunciasRoutes: FastifyPluginAsync = async (app) => {
       }, {})
 
       return {
-        data: data.map((d) => ({
-          ...d.denuncia,
-          responsavel: d.adminNome,
-          categorias: catsByDenuncia[d.denuncia.id] || [],
-        })),
+        data: data.map((d) =>
+          camelToSnake({
+            ...d.denuncia,
+            responsavel: d.adminNome,
+            categorias: catsByDenuncia[d.denuncia.id] || [],
+          }),
+        ),
         total,
         page: q.page,
         totalPages: Math.ceil(total / q.limit),
@@ -299,7 +303,7 @@ export const denunciasRoutes: FastifyPluginAsync = async (app) => {
           url: await getSignedUrl(a.storagePath, 300),
         })),
       )
-      return { anexos: withUrls }
+      return { anexos: camelToSnake(withUrls) }
     },
   )
 }

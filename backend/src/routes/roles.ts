@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { eq, desc } from 'drizzle-orm'
 import { db } from '../db/client.js'
 import { roles, rolePermission, permissions, userRole } from '../db/schema/index.js'
+import { camelToSnake } from '../lib/case.js'
 
 const createSchema = z.object({
   nome: z.string().min(2),
@@ -41,15 +42,17 @@ export const rolesRoutes: FastifyPluginAsync = async (app) => {
       return acc
     }, {})
 
-    return allRoles.map((r) => ({
-      ...r,
-      permissions: (permsByRole[r.id] || []).map(({ id, nome, slug, descricao }) => ({
-        id,
-        nome,
-        slug,
-        descricao,
+    return camelToSnake(
+      allRoles.map((r) => ({
+        ...r,
+        permissions: (permsByRole[r.id] || []).map(({ id, nome, slug, descricao }) => ({
+          id,
+          nome,
+          slug,
+          descricao,
+        })),
       })),
-    }))
+    )
   })
 
   // POST /api/roles — criar
