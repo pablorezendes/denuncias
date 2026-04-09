@@ -1,0 +1,155 @@
+/* Identidade Visual HSFA - Hospital São Francisco de Assis */
+/* Cores extraídas do sistema PHP original */
+
+:root {
+  /* Cores Principais HSFA (do sistema PHP original) */
+  --hsfa-primary: #01717B;        /* Verde-azulado institucional */
+  --hsfa-primary-dark: #015A61;   /* Versão escura */
+  --hsfa-primary-light: #0199A5;  /* Versão clara */
+  --hsfa-primary-hover: #015c64;  /* Hover */
+
+  /* Cores Secundárias */
+  --hsfa-secondary: #2E3A55;      /* Azul-escuro */
+  --hsfa-secondary-dark: #1E293B; /* Versão escura */
+  --hsfa-secondary-light: #475569;/* Versão clara */
+  --hsfa-secondary-hover: #252f42;/* Hover */
+
+  /* Cores de Texto */
+  --hsfa-text: #060606;           /* Texto principal */
+  --hsfa-text-light: #FFFFFF;     /* Texto claro */
+  --hsfa-text-soft: #374151;      /* Texto suave */
+  --hsfa-text-muted: #6B7280;     /* Texto muted */
+
+  /* Cores de Realce */
+  --hsfa-soft: #CBE9E7;           /* Realce suave */
+  --hsfa-soft-hover: #b8e0dd;     /* Hover do realce */
+
+  /* Cores Neutras */
+  --hsfa-muted: #828282;          /* Cinza médio */
+  --hsfa-bg: #FFFFFF;             /* Fundo branco */
+  --hsfa-bg-secondary: #F9FAFB;   /* Fundo secundário */
+  --hsfa-bg-soft: #F3F4F6;        /* Fundo suave */
+
+  /* Cores de Status */
+  --hsfa-success: #059669;        /* Sucesso */
+  --hsfa-success-light: #D1FAE5;  /* Fundo sucesso */
+  --hsfa-warning: #D97706;        /* Aviso */
+  --hsfa-warning-light: #FEF3C7;  /* Fundo aviso */
+  --hsfa-error: #DC2626;          /* Erro */
+  --hsfa-error-light: #FEE2E2;    /* Fundo erro */
+  --hsfa-info: #0891B2;           /* Info */
+  --hsfa-info-light: #CFFAFE;     /* Fundo info */
+
+  /* Tipografia */
+  --hsfa-fonte-principal: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --hsfa-fonte-secundaria: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Classes utilitárias HSFA */
+.hsfa-bg-primary {
+  background-color: var(--hsfa-primary);
+}
+
+.hsfa-bg-primary-dark {
+  background-color: var(--hsfa-primary-dark);
+}
+
+.hsfa-bg-primary-light {
+  background-color: var(--hsfa-primary-light);
+}
+
+.hsfa-text-primary {
+  color: var(--hsfa-primary);
+}
+
+.hsfa-border-primary {
+  border-color: var(--hsfa-primary);
+}
+
+/* Botões HSFA */
+.btn-hsfa-primary {
+  background-color: var(--hsfa-primary);
+  color: var(--hsfa-text-light);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-hsfa-primary:hover {
+  background-color: var(--hsfa-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(1, 113, 123, 0.3);
+}
+
+.btn-hsfa-secondary {
+  background-color: var(--hsfa-bg);
+  color: var(--hsfa-primary);
+  border: 2px solid var(--hsfa-primary);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-hsfa-secondary:hover {
+  background-color: var(--hsfa-soft);
+}
+
+/* Cards HSFA */
+.card-hsfa {
+  background: var(--hsfa-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--hsfa-muted);
+  transition: all 0.3s ease;
+}
+
+.card-hsfa:hover {
+  box-shadow: 0 4px 16px rgba(1, 113, 123, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Inputs HSFA */
+.input-hsfa {
+  border: 2px solid var(--hsfa-muted);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.input-hsfa:focus {
+  border-color: var(--hsfa-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 113, 123, 0.1);
+}
+
+/* Badges de Status HSFA */
+.badge-hsfa-pendente {
+  background-color: var(--hsfa-warning-light);
+  color: var(--hsfa-warning);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-hsfa-analise {
+  background-color: var(--hsfa-soft);
+  color: var(--hsfa-primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-hsfa-concluida {
+  background-color: var(--hsfa-success-light);
+  color: var(--hsfa-success);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}

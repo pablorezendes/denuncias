@@ -1,0 +1,74 @@
+# ============================================================
+# Overrides para PRODUÇÃO
+# Uso: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# ============================================================
+
+services:
+  postgres:
+    restart: always
+    ports: []  # Não expor porta externa em produção
+    volumes:
+      - /var/lib/hsfa/postgres:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+
+  minio:
+    restart: always
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - /var/lib/hsfa/minio:/data
+
+  redis:
+    restart: always
+    volumes:
+      - /var/lib/hsfa/redis:/data
+
+  api:
+    restart: always
+    ports: []  # não expor direto, só via nginx
+    environment:
+      NODE_ENV: production
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+      replicas: 2
+
+  web:
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+
+  # Backup diário automático do Postgres
+  postgres-backup:
+    image: prodrigestivill/postgres-backup-local:latest
+    container_name: hsfa-backup
+    restart: always
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_EXTRA_OPTS: "-Z9 --schema=public --blobs"
+      SCHEDULE: "@daily"
+      BACKUP_KEEP_DAYS: 14
+      BACKUP_KEEP_WEEKS: 8
+      BACKUP_KEEP_MONTHS: 12
+      HEALTHCHECK_PORT: 8080
+    volumes:
+      - /var/backups/hsfa:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - hsfa-net

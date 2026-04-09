@@ -1,0 +1,107 @@
+# ============================================================
+# Canal de Denuncias HSFA - .gitignore
+# ============================================================
+
+# --------- Node / build ---------
+node_modules/
+backend/node_modules/
+dist/
+backend/dist/
+build/
+*.tsbuildinfo
+
+# --------- Logs ---------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# --------- Environment / Credenciais ---------
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+.env.homolog
+.env.*.local
+.env.bak
+.env.bak-*
+!.env.example
+
+# --------- Dados sensiveis de migracao ---------
+backend/dump/
+dump/
+backups/
+*.dump
+*.sql.gz
+
+# --------- Docker overrides especificos de host ---------
+docker-compose.override.yml
+docker-compose.*.override.yml
+docker-compose.yml.bak-*
+docker-compose.prod.local.yml
+
+# --------- Arquivos grandes/temporarios ---------
+archive.zip
+*.tar.gz
+*.zip
+
+# --------- Editor / OS ---------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# --------- Playwright / Testes ---------
+playwright-report/
+test-results/
+coverage/
+.nyc_output/
+
+# --------- Certificados / chaves ---------
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# --------- Supabase CLI cache ---------
+.supabase/
+
+# --------- Outros ---------
+*.local
+.turbo/
+.cache/
+
+# --------- Claude Code (ferramenta local) ---------
+.claude/
+
+# --------- Documentacao legada com secrets antigos ---------
+# Arquivos deixam no diretorio mas nao commita.
+# Se quiser atualizar e commitar depois, adicione aqui o nome:
+CONFIGURAR_RESEND.md
+EMAIL_CONFIGURACAO.md
+
+# --------- Legado do sistema antigo (Supabase) ---------
+# Testes Playwright do Supabase antigo - serao reescritos na Fase 4
+tests/
+# Scripts legados (importar-denuncias, configurar-resend, testar-email)
+scripts/
+# Supabase Edge Functions (hash-password, verify-password, send-denuncia-email)
+# Substituidas pelo backend Fastify proprio em backend/
+supabase/
+
+# --------- Legado do sistema antigo (Supabase) ---------
+# Testes Playwright do Supabase antigo - serao reescritos na Fase 4
+tests/
+# Scripts legados (importar-denuncias, configurar-resend, testar-email)
+scripts/
+# Supabase Edge Functions (hash-password, verify-password, send-denuncia-email)
+# Substituidas pelo backend Fastify proprio em backend/
+supabase/
