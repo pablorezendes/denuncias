@@ -1,0 +1,48 @@
+# Node
+node_modules
+backend/node_modules
+npm-debug.log*
+yarn-debug.log*
+
+# Build outputs
+dist
+backend/dist
+build
+
+# Editor/OS
+.DS_Store
+.vscode
+.idea
+*.swp
+
+# Git
+.git
+.gitignore
+
+# Env (nunca entra em imagem)
+.env
+.env.*
+!.env.example
+
+# Backups e arquivos pesados
+archive.zip
+backups/
+dump/
+backend/dump/
+
+# Testes e reports
+playwright-report
+test-results
+coverage
+
+# Docker metafiles
+docker-compose.override.yml
+Dockerfile*
+
+# Logs
+*.log
+logs/
+
+# Documentacao que nao precisa ir pro build
+*.md
+!README.md
